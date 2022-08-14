@@ -3,17 +3,30 @@
 import random
 import email_send
 import datetime
+import requests
+
+def get_kanye_quote():
+    connection_kanye = requests.get('https://api.kanye.rest')
+    connection_kanye.raise_for_status()
+    kanye_data = connection_kanye.json()
+    kanye_quote = kanye_data['quote']
+    return kanye_quote
+
 
 with open('quotes.txt', 'r') as f:
     quote_list = f.readlines()
 
-quote = random.choice(quote_list)
+inspirational_quote = random.choice(quote_list)
+kanye_quote = get_kanye_quote()
 
-email_send.sendmail_text_only('Daily inspirational quote', ['matthewwillis55@yahoo.com', 'alejandravwillis@gmail.com'], quote)
+message_text = f'Inspirational Quote: {inspirational_quote}\n' \
+               f'Kanye Quote: {kanye_quote}'
+
+email_send.sendmail_text_only('Daily Quotes', ['matthewwillis55@yahoo.com', 'alejandravwillis@gmail.com'], message_text)
 
 month_day = datetime.datetime.now().strftime("%m-%d")
 
-birthday_dict = {'08-11': [['alejandracvc2@gmail.com', 'My Beautiful Wife Alejandra'], ["matthewwillis55@yahoo.com", "Matthew"]]}
+birthday_dict = {'08-11': [['alejandracvc2@gmail.com', 'My Beautiful Wife Alejandra'], ["matthewwillis55@gmail.com", "Matthew"]]}
 
 if month_day in birthday_dict.keys():
     birthday_recipients = birthday_dict[month_day]
