@@ -1,2 +1,9 @@
 sendgrid.env
 secretprod.py
+*.pyc
+__pychache__/
+
+
+
+
+__pycache__/email_send.cpython-38.pyc

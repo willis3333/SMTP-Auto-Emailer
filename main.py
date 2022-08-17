@@ -1,4 +1,5 @@
 # TODO: set up birthdays in csv file and set code to read csv
+# TODO: set up crontab for script in cronjobs
 
 import random
 import email_send
@@ -19,14 +20,14 @@ with open('quotes.txt', 'r') as f:
 inspirational_quote = random.choice(quote_list)
 kanye_quote = get_kanye_quote()
 
-message_text = f'Inspirational Quote: {inspirational_quote}\n' \
+message_text = f'Inspirational Quote: {inspirational_quote}\n<br>' \
                f'Kanye Quote: {kanye_quote}'
 
 email_send.sendmail_text_only('Daily Quotes', ['matthewwillis55@yahoo.com', 'alejandravwillis@gmail.com'], message_text)
 
 month_day = datetime.datetime.now().strftime("%m-%d")
 
-birthday_dict = {'08-11': [['alejandracvc2@gmail.com', 'My Beautiful Wife Alejandra'], ["matthewwillis55@gmail.com", "Matthew"]]}
+birthday_dict = {'12-11': ['alejandracvc2@gmail.com', 'My Beautiful Wife Alejandra'], '10-12': ["matthewwillis55@gmail.com", "Matthew"]}
 
 if month_day in birthday_dict.keys():
     birthday_recipients = birthday_dict[month_day]
